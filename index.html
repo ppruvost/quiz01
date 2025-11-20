@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Relation vitesse et fréquence de rotation - Seconde Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" id="container">
+    <h1>Quiz Vitesse et fréquence de rotation</h1>
+    <p>
+      Testez vos connaissances sur la vitesse moyenne et la fréquence de rotation, une appliquation en atelier !
+    </p>
+
+    <!-- =========================
+         FORMULAIRE D’IDENTIFICATION
+         ========================= -->
+    <div id="userForm">
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" placeholder="Entrez votre nom" required>
+
+      <label for="prenom">Prénom :</label>
+      <input type="text" id="prenom" placeholder="Entrez votre prénom" required>
+
+      <button class="button" id="startQuiz">Commencer le quiz</button>
+    </div>
+
+    <!-- =========================
+         SECTION QUIZ (masquée au départ)
+         ========================= -->
+    <div id="quiz" style="display:none;"></div>
+
+    <!-- Zone d'affichage score / explication -->
+    <div class="score" id="score"></div>
+    <div class="explication" id="explication"></div>
+  </div>
+
+  <!-- =========================
+       SCRIPTS
+       ========================= -->
+
+  <!-- EmailJS -->
+  <script type="text/javascript"
+          src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+
+  <!-- Questions + logique du quiz -->
+  <script src="questions.js"></script>
+
+  <!-- Envoi EmailJS -->
+  <script src="envoi.js"></script>
+
+</body>
+</html>
