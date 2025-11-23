@@ -26,6 +26,16 @@ h1, h2 {
   margin-bottom: 10px;
 }
 
+/* Affiche data-title comme sous-titre automatiquement */
+h1::after {
+  content: attr(data-title);
+  display: block;
+  font-size: 0.75em;
+  margin-top: 6px;
+  color: #215f92;
+  opacity: 0.8;
+}
+
 /* ===============================
    FORMULAIRE (nom / prénom)
 =============================== */
@@ -126,23 +136,4 @@ input[type="radio"] {
 
 /* ===============================
    FEEDBACK : BONNE / MAUVAISE RÉPONSE
-=============================== */
-.success {
-  color: #0c7a00;
-  background: #e3f7e1;
-  border-radius: 6px;
-  padding: 8px;
-  display: block;
-  margin-bottom: 6px;
-  border: 1px solid #b6e2b5;
-}
-
-.fail {
-  color: #bc2929;
-  background: #fde0e0;
-  border-radius: 6px;
-  padding: 8px;
-  display: block;
-  margin-bottom: 6px;
-  border: 1px solid #f4bbbb;
-}
+=====
