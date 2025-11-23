@@ -19,17 +19,17 @@ function shuffleArray(arr) {
 }
 
 // =============================
-// Mélange des questions et options
+// Mélange des questions + réponses
 // =============================
 function shuffleQuestions() {
   return questions.map(q => ({
     ...q,
-    options: shuffleArray(q.options)
+    options: shuffleArray(q.options) // mélange des propositions
   }));
 }
 
 // =============================
-// Questions du quiz
+// QUESTIONS DU QUIZ (inchangées)
 // =============================
 const questions = [
 
@@ -204,7 +204,7 @@ const questions = [
   }
 
 ];
- 
+
 // =============================
 // AFFICHAGE D'UNE QUESTION
 // =============================
@@ -237,14 +237,15 @@ function validateAnswer() {
   const selected = document.querySelector('input[name="q"]:checked');
 
   if (!selected) {
-    document.getElementById("explication").innerHTML = "Veuillez sélectionner une réponse.";
+    document.getElementById("explication").innerHTML =
+      "Veuillez sélectionner une réponse.";
     return;
   }
 
   const q = shuffledQuestions[current];
   const reponse = selected.value;
 
-  // >>> AJOUT ESSENTIEL pour envoyer dans envoi.js <<<
+  // **** AJOUT ESSENTIEL pour l'envoi Email ****
   q.userAnswer = reponse;
 
   if (reponse === q.bonne_reponse) {
@@ -275,7 +276,7 @@ function endQuiz() {
     `<h2>Quiz terminé !</h2>
      <p>Score final : ${score} / ${shuffledQuestions.length}</p>`;
 
-  // envoi.js ajoute ici l'envoi Email
+  // L'envoi Email est géré dans envoi.js
 }
 
 // =============================
