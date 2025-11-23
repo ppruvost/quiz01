@@ -2,25 +2,29 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz Relation vitesse et fréquence de rotation - Seconde Pro</title>
+  <title>Quiz - Vitesse & Fréquence de rotation</title>
 
-  <!-- Feuille de style -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Police très lisible (DYS-friendly) -->
+  <link href="https://fonts.googleapis.com/css2?family=Verdana&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
   <div class="container" id="container">
 
-    <h1 data-title="Quiz Relation vitesse et fréquence de rotation - Seconde Pro">
-      Quiz Vitesse et fréquence de rotation
+    <h1 data-title="Vitesse moyenne & fréquence de rotation">
+      Quiz Vitesse & Fréquence de rotation
     </h1>
 
-    <p>
-      Testez vos connaissances sur la vitesse moyenne et la fréquence de rotation, une application en atelier !
+    <p class="intro">
+      Testez vos connaissances avec un quiz interactif inspiré de Kahoot et optimisé pour les élèves DYS !
     </p>
 
-    <!-- FORMULAIRE D’IDENTIFICATION -->
+    <!-- =============================================
+         FORMULAIRE IDENTITÉ
+    ==============================================-->
     <div id="userForm">
       <label for="nom">Nom :</label>
       <input type="text" id="nom" placeholder="Entrez votre nom" required>
@@ -28,19 +32,34 @@
       <label for="prenom">Prénom :</label>
       <input type="text" id="prenom" placeholder="Entrez votre prénom" required>
 
-      <button class="button" id="startQuiz">Commencer le quiz</button>
+      <button class="button start" id="startQuiz">🎮 Commencer le quiz</button>
     </div>
 
-    <!-- ZONE QUIZ (cachée au départ) -->
-    <div id="quiz" style="display: none;"></div>
+    <!-- =============================================
+         ZONE DES QUESTIONS
+    ==============================================-->
+    <div id="quizArea" class="hidden">
+      <div id="questionText" class="question"></div>
+      <div id="optionsContainer" class="options"></div>
 
-    <!-- RÉSULTATS -->
-    <div id="resultats"></div>
+      <button class="button next hidden" id="nextButton">Question suivante ➜</button>
+    </div>
+
+    <!-- =============================================
+         SCORE FINAL
+    ==============================================-->
+    <div id="resultArea" class="hidden">
+      <h2>Résultat</h2>
+      <p id="scoreDisplay" class="score"></p>
+      <div id="explicationsZone"></div>
+
+      <button class="button restart" id="restartQuiz">🔄 Recommencer</button>
+    </div>
 
   </div>
 
-  <!-- Vos scripts externes -->
-  <script src="question.js"></script>
+  <!-- JS -->
+  <script src="questions.js"></script>
   <script src="envoi.js"></script>
 
 </body>
