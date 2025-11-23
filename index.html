@@ -2,7 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz Relation vitesse et fréquence de rotation - Seconde Pro">
+  <title>Quiz Relation vitesse et fréquence de rotation - Seconde Pro</title>
+
+  <!-- Feuille de style -->
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -18,7 +20,7 @@
       Testez vos connaissances sur la vitesse moyenne et la fréquence de rotation, une application en atelier !
     </p>
 
-    <!-- Formulaire -->
+    <!-- FORMULAIRE D’IDENTIFICATION -->
     <div id="userForm">
       <label for="nom">Nom :</label>
       <input type="text" id="nom" placeholder="Entrez votre nom" required>
@@ -29,8 +31,17 @@
       <button class="button" id="startQuiz">Commencer le quiz</button>
     </div>
 
+    <!-- ZONE QUIZ (cachée au départ) -->
+    <div id="quiz" style="display: none;"></div>
+
+    <!-- RÉSULTATS -->
+    <div id="resultats"></div>
+
   </div>
 
-  <script src="script.js"></script>
+  <!-- Vos scripts externes -->
+  <script src="question.js"></script>
+  <script src="envoi.js"></script>
+
 </body>
 </html>
