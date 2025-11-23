@@ -1,39 +1,49 @@
-// ===============================
-// ENVOI DES RÉSULTATS PAR EMAILJS
-// ===============================
-
+// =============================
 // Initialisation EmailJS
-(function() {
-  emailjs.init("TJHX0tkW1CCz7lv7a"); // TA clé EmailJS
+// =============================
+(function () {
+  emailjs.init("TJHX0tkW1CCz7lv7a");  // Ta clé publique
 })();
 
-// On remplace endQuiz pour ajouter l’envoi Email
+// On sauvegarde l'ancien endQuiz de questions.js
 const oldEndQuiz = endQuiz;
 
-endQuiz = function() {
+// =============================
+// Fin du quiz + Envoi EmailJS
+// =============================
+endQuiz = function () {
 
-  oldEndQuiz(); // affiche le score comme prévu
+  // Exécution de l’affichage original du quiz
+  oldEndQuiz();
 
-  const nom = document.getElementById("nom").value.trim();
-  const prenom = document.getElementById("prenom").value.trim();
-
+  // Score final réel sur les questions mélangées
   const scoreFinal = `${score} / ${shuffledQuestions.length}`;
 
-  // Création du résumé
-  let details = "";
-
+  // Préparation du résumé détaillé
+  let recap = "";
   shuffledQuestions.forEach((q, i) => {
-    details += `Q${i+1}: ${q.question}\n`;
-    details += `Réponse élève : ${q.userAnswer || "Aucune"}\n`;
-    details += `Bonne réponse : ${q.bonne_reponse}\n\n`;
+    recap += `Q${i + 1}: ${q.question}\n`;
+    recap += `Réponse élève : ${q.userAnswer || "Aucune"}\n`;
+    recap += `Bonne réponse : ${q.bonne_reponse}\n\n`;
   });
 
-  emailjs.send("service_xxxxxx", "template_quiz", {
-    nom: nom,
-    prenom: prenom,
+  // Paramètres envoyés à EmailJS
+  const emailParams = {
+    nom: user.nom,
+    prenom: user.prenom,
     score: scoreFinal,
-    details: details
-  })
-  .then(() => console.log("Email envoyé !"))
-  .catch(err => console.error("Erreur EmailJS:", err));
+    details: recap,
+    email: "lyceepro.mermoz@gmail.com"   // Adresse du prof
+  };
+
+  // Envoi EmailJS
+  emailjs
+    .send("service_cgh817y", "template_ly7s41e", emailParams)
+    .then(() => {
+      alert("✅ Résultats envoyés automatiquement par e-mail à votre professeur.\nMerci !");
+    })
+    .catch((error) => {
+      console.error("❌ Erreur EmailJS :", error);
+      alert("Erreur lors de l’envoi : " + JSON.stringify(error));
+    });
 };
