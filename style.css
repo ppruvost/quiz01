@@ -2,64 +2,78 @@
    STYLE GLOBAL
 =============================== */
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f8fb;
+  font-family: Verdana, Arial, sans-serif;
+  background: #f3f5ff;
   margin: 0;
   padding: 0;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 700px;
   margin: 40px auto;
-  background: #fff;
-  padding: 32px 24px;
-  border-radius: 12px;
-  box-shadow: 0 2px 16px #c9d2e3;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
 }
 
 /* ===============================
    TITRES
 =============================== */
-h1, h2 {
-  color: #215f92;
+h1 {
+  color: #2a3d8f;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 h1::after {
   content: attr(data-title);
   display: block;
-  font-size: 0.75em;
-  margin-top: 6px;
-  color: #215f92;
-  opacity: 0.8;
+  font-size: 0.8em;
+  margin-top: 4px;
+  color: #4c5fcc;
+  opacity: 0.85;
+}
+
+h2 {
+  text-align: center;
+  color: #2a3d8f;
 }
 
 /* ===============================
-   FORMULAIRE
+   PARAGRAPHES
+=============================== */
+.intro {
+  font-size: 1.1em;
+  color: #333;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* ===============================
+   FORMULAIRE IDENTITÉ
 =============================== */
 #userForm {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 #userForm label {
   font-weight: bold;
-  color: #184060;
+  color: #1f2d67;
 }
 
-#userForm input[type="text"] {
-  padding: 8px 10px;
-  border: 1px solid #c3d1e2;
-  border-radius: 6px;
+#userForm input {
+  padding: 10px;
+  border: 2px solid #c7d0ff;
+  border-radius: 8px;
   font-size: 1em;
-  transition: border-color 0.2s;
 }
 
-#userForm input[type="text"]:focus {
-  border-color: #296eb2;
+#userForm input:focus {
+  border-color: #2a3d8f;
   outline: none;
 }
 
@@ -67,31 +81,40 @@ h1::after {
    QUESTIONS
 =============================== */
 .question {
+  font-size: 1.3em;
   font-weight: bold;
-  font-size: 1.14em;
-  margin: 18px 0 8px 0;
+  margin-bottom: 16px;
+  color: #1b2763;
+  text-align: left;
 }
 
-.options {
-  margin-bottom: 14px;
-}
-
+/* ===============================
+   OPTIONS DE RÉPONSE (type Kahoot)
+=============================== */
 .options label {
   display: block;
-  margin-bottom: 7px;
-  background: #e9f1fa;
-  border-radius: 6px;
-  padding: 7px 12px;
+  background: #e8ecff;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: 0.25s ease;
+  font-size: 1.05em;
 }
 
 .options label:hover {
-  background: #cce1fb;
+  background: #d1d8ff;
 }
 
 input[type="radio"] {
-  margin-right: 8px;
+  display: none;
+}
+
+input[type="radio"]:checked + label {
+  background: #b6c4ff;
+  border: 3px solid #2a3d8f;
+  font-weight: bold;
 }
 
 /* ===============================
@@ -99,46 +122,53 @@ input[type="radio"] {
 =============================== */
 .button {
   display: inline-block;
-  background: #296eb2;
+  width: 100%;
+  padding: 14px;
+  background: #2a3d8f;
   color: #fff;
-  padding: 10px 24px;
-  margin-top: 12px;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
+  font-size: 1.2em;
   cursor: pointer;
-  font-size: 1.06em;
-  transition: background 0.25s;
+  margin-top: 20px;
+  transition: 0.25s;
 }
 
 .button:hover {
-  background: #184060;
+  background: #1f2d67;
 }
 
+/* Variation couleurs (Kahoot-like) */
+.start { background: #5c7dff; }
+.start:hover { background: #455ecc; }
+
+.next { background: #6bcf7b; }
+.next:hover { background: #48a758; }
+
+.restart { background: #ff7b72; }
+.restart:hover { background: #d85a54; }
+
 /* ===============================
-   ZONE RÉSULTATS ET RETOURS
+   SCORE & EXPLICATIONS
 =============================== */
 .score {
-  font-size: 1.12em;
+  font-size: 1.4em;
+  color: #2a3d8f;
   text-align: center;
-  margin: 18px 0 15px 0;
-  color: #1a4e70;
+  margin-bottom: 20px;
 }
 
 .explication {
-  border-radius: 7px;
-  padding: 10px 14px;
-  margin: 12px 0;
-  font-size: 1em;
-  line-height: 1.4;
-  border: 1px solid #d0e4d0;
+  background: #eef3ff;
+  border-left: 6px solid #2a3d8f;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 10px;
 }
 
-.bonne {
-  background: #d7f3d7;
-  border-left: 4px solid #63b563;
-}
-
-.mauvaise {
-  background: #f7d6d6;
-  border-left: 4px solid #c44949;
+/* ===============================
+   UTILITAIRES
+=============================== */
+.hidden {
+  display: none;
 }
