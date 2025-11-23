@@ -4,7 +4,7 @@
 let user = { nom: "", prenom: "" };
 let current = 0;
 let score = 0;
-let shuffledQuestions = []; // <–– QUESTIONS MELANGEES
+let shuffledQuestions = []; // QUESTIONS MELANGEES
 
 // =============================
 // Mélange d'un tableau
@@ -19,7 +19,7 @@ function shuffleArray(arr) {
 }
 
 // =============================
-// Mélange des questions et des options
+// Mélange des questions et options
 // =============================
 function shuffleQuestions() {
   return questions.map(q => ({
@@ -206,7 +206,7 @@ const questions = [
 ];
  
 // =============================
-// Affichage des questions
+// AFFICHAGE D'UNE QUESTION
 // =============================
 function showQuestion() {
   const q = shuffledQuestions[current];
@@ -216,10 +216,14 @@ function showQuestion() {
   let html = `<div class="question">${q.question}</div><div class="options">`;
 
   q.options.forEach((opt) => {
-    html += `<label><input type="radio" name="q" value="${opt}"> ${opt}</label><br>`;
+    html += `
+      <label>
+        <input type="radio" name="q" value="${opt}"> ${opt}
+      </label><br>`;
   });
 
-  html += `<button id="submit">Valider</button>`;
+  html += `<button id="submit" class="button next">Valider</button>`;
+
   document.getElementById("quiz").innerHTML = html;
   document.getElementById("explication").innerHTML = "";
 
@@ -227,10 +231,11 @@ function showQuestion() {
 }
 
 // =============================
-// Validation de la réponse
+// VALIDATION DE LA RÉPONSE
 // =============================
 function validateAnswer() {
   const selected = document.querySelector('input[name="q"]:checked');
+
   if (!selected) {
     document.getElementById("explication").innerHTML = "Veuillez sélectionner une réponse.";
     return;
@@ -238,6 +243,9 @@ function validateAnswer() {
 
   const q = shuffledQuestions[current];
   const reponse = selected.value;
+
+  // >>> AJOUT ESSENTIEL pour envoyer dans envoi.js <<<
+  q.userAnswer = reponse;
 
   if (reponse === q.bonne_reponse) {
     score++;
@@ -249,25 +257,29 @@ function validateAnswer() {
   }
 
   current++;
-  document.getElementById("score").innerText = `Score actuel : ${score} / ${shuffledQuestions.length}`;
+  document.getElementById("score").innerText =
+    `Score actuel : ${score} / ${shuffledQuestions.length}`;
 
   if (current < shuffledQuestions.length) {
-    setTimeout(showQuestion, 8000);
+    setTimeout(showQuestion, 4000);
   } else {
     setTimeout(endQuiz, 4000);
   }
 }
 
 // =============================
-// Fin du quiz
+// FIN DU QUIZ
 // =============================
 function endQuiz() {
   document.getElementById("quiz").innerHTML =
-    `<h2>Quiz terminé !</h2><p>Score final : ${score} / ${shuffledQuestions.length}</p>`;
+    `<h2>Quiz terminé !</h2>
+     <p>Score final : ${score} / ${shuffledQuestions.length}</p>`;
+
+  // envoi.js ajoute ici l'envoi Email
 }
 
 // =============================
-// Vérification formulaire + lancement
+// LANCEMENT DU QUIZ
 // =============================
 document.getElementById("startQuiz").addEventListener("click", () => {
   const nom = document.getElementById("nom").value.trim();
@@ -281,7 +293,7 @@ document.getElementById("startQuiz").addEventListener("click", () => {
   user.nom = nom;
   user.prenom = prenom;
 
-  shuffledQuestions = shuffleQuestions(); // Mélange réel
+  shuffledQuestions = shuffleQuestions();
   current = 0;
   score = 0;
 
