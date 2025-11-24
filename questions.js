@@ -135,28 +135,23 @@ document.getElementById("quiz").innerHTML = `
 // LANCEMENT DU QUIZ
 // =============================
 document.getElementById("startQuiz").addEventListener("click", () => {
-const nom = document.getElementById("nom").value.trim();
-const prenom = document.getElementById("prenom").value.trim();
+    const nom = document.getElementById("nom").value.trim();
+    const prenom = document.getElementById("prenom").value.trim();
 
+    if (!nom || !prenom) {
+        alert("Merci de renseigner votre nom et prénom avant de commencer.");
+        return;
+    }
 
-if (!nom || !prenom) {
-alert("Merci de renseigner votre nom et prénom avant de commencer.");
-return;
-}
+    user.nom = nom;
+    user.prenom = prenom;
 
+    shuffledQuestions = shuffleQuestions();
+    current = 0;
+    score = 0;
 
-user.nom = nom;
-user.prenom = prenom;
+    document.getElementById("userForm").style.display = "none";
+    document.getElementById("quiz").style.display = "block";
 
-
-shuffledQuestions = shuffleQuestions();
-current = 0;
-score = 0;
-
-
-document.getElementById("userForm").style.display = "none";
-document.getElementById("quiz").style.display = "block";
-
-
-showQuestion();
+    showQuestion();
 });
