@@ -56,8 +56,6 @@ const questions = [
 ];
 
 // =============================
-}
-
 
 // =============================
 // VALIDATION AVEC ANIMATION STYLE KAHOOT
