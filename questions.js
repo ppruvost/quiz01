@@ -54,7 +54,24 @@ const questions = [
   { question: "19. Relier N et ω :", options: ["ω = 2π × (N/60)", "ω = N×60", "ω = πN", "ω = N/(2π)"], bonne_reponse: "ω = 2π × (N/60)", explication: "Tours/min→tours/s→radians." },
   { question: "20. Une Vc trop faible entraîne :", options: ["Échauffement important", "Casse outil immédiate", "Mauvais état de surface", "Coupe impossible"], bonne_reponse: "Mauvais état de surface", explication: "Copeaux mal formés." }
 ];
+// =============================
+// AFFICHAGE D'UNE QUESTION
+// =============================
+function showQuestion() {
+    const question = shuffledQuestions[current];
+    let optionsHTML = question.options.map((option, index) =>
+        `<div>
+            <input type="radio" id="option${index}" name="q" value="${option}">
+            <label for="option${index}">${option}</label>
+        </div>`
+    ).join('');
 
+    document.getElementById("quiz").innerHTML = `
+        <h2>${question.question}</h2>
+        ${optionsHTML}
+        <button onclick="validateAnswer()">Valider</button>
+    `;
+}
 // =============================
 
 // =============================
@@ -123,11 +140,10 @@ setTimeout(endQuiz, 2500);
 // FIN DU QUIZ
 // =============================
 function endQuiz() {
-document.getElementById("quiz").innerHTML = `
-<h2>Quiz terminé !</h2>
-<p>Score final : ${score} / ${shuffledQuestions.length}</p>`;
+    document.getElementById("quiz").innerHTML = `
+    <h2>Quiz terminé !</h2>
+    <p>Score final : ${score} / ${shuffledQuestions.length}</p>`;
 }
-
 
 // =============================
 // LANCEMENT DU QUIZ
@@ -135,21 +151,16 @@ document.getElementById("quiz").innerHTML = `
 document.getElementById("startQuiz").addEventListener("click", () => {
     const nom = document.getElementById("nom").value.trim();
     const prenom = document.getElementById("prenom").value.trim();
-
     if (!nom || !prenom) {
         alert("Merci de renseigner votre nom et prénom avant de commencer.");
         return;
     }
-
     user.nom = nom;
     user.prenom = prenom;
-
     shuffledQuestions = shuffleQuestions();
     current = 0;
     score = 0;
-
     document.getElementById("userForm").style.display = "none";
     document.getElementById("quiz").style.display = "block";
-
-    showQuestion();
+    showQuestion(); // Appel de la fonction showQuestion
 });
