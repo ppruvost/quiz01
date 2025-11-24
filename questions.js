@@ -85,14 +85,12 @@ function showQuestion() {
 // VALIDATION AVEC ANIMATION STYLE KAHOOT
 // =============================
 function validateAnswer() {
-const selected = document.querySelector('input[name="q"]:checked');
-
+    const selected = document.querySelector(`input[name="q${current}"]:checked`);
 
 if (!selected) {
 document.getElementById("explication").innerHTML = "Veuillez sélectionner une réponse.";
 return;
 }
-
 
 const q = shuffledQuestions[current];
 const reponse = selected.value;
