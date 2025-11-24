@@ -11,12 +11,12 @@ let shuffledQuestions = [];
 // Mélange d'un tableau
 // =============================
 function shuffleArray(arr) {
-const a = [...arr];
-for (let i = a.length - 1; i > 0; i--) {
-const j = Math.floor(Math.random() * (i + 1));
-[a[i], a[j]] = [a[j], a[i]];
-}
-return a;
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
 }
 
 
@@ -24,11 +24,13 @@ return a;
 // Mélange des questions + réponses
 // =============================
 function shuffleQuestions() {
-return questions.map((q) => ({
-...q,
-options: shuffleArray(q.options),
-}));
+    return questions.map((q) => ({
+        ...q,
+        options: shuffleArray(q.options)
+    }));
 }
+
+
 // =============================
 // LISTE DES QUESTIONS
 // =============================
@@ -54,25 +56,9 @@ const questions = [
   { question: "19. Relier N et ω :", options: ["ω = 2π × (N/60)", "ω = N×60", "ω = πN", "ω = N/(2π)"], bonne_reponse: "ω = 2π × (N/60)", explication: "Tours/min→tours/s→radians." },
   { question: "20. Une Vc trop faible entraîne :", options: ["Échauffement important", "Casse outil immédiate", "Mauvais état de surface", "Coupe impossible"], bonne_reponse: "Mauvais état de surface", explication: "Copeaux mal formés." }
 ];
-// =============================
-// --- Génération du HTML ---
-// =============================
-function afficherQuestion(q) {
-    let html = `<h3>${q.question}</h3>`;
 
-    q.answers.forEach((rep, index) => {
-        html += `
-            <label class="ligne-reponse">
-                <input type="radio" name="reponse" value="${index}">
-                <span>${rep}</span>
-            </label>
-        `;
-    });
 
-    document.getElementById("quiz").innerHTML = html;
-}
 
-afficherQuestion(questions[0]);
 // =============================
 // AFFICHAGE D'UNE QUESTION
 // =============================
@@ -80,7 +66,7 @@ function showQuestion() {
     const question = shuffledQuestions[current];
 
     let optionsHTML = question.options.map((option, index) => {
-        const inputId = `q${current}_opt${index}`; // ID UNIQUE !
+        const inputId = `q${current}_opt${index}`;
 
         return `
             <div class="option-container">
@@ -98,65 +84,55 @@ function showQuestion() {
     `;
 }
 
-// =============================
 
 // =============================
-// VALIDATION AVEC ANIMATION STYLE KAHOOT
+// VALIDATION STYLE KAHOOT
 // =============================
 function validateAnswer() {
     const selected = document.querySelector(`input[name="q${current}"]:checked`);
 
-if (!selected) {
-document.getElementById("explication").innerHTML = "Veuillez sélectionner une réponse.";
-return;
-}
+    if (!selected) {
+        document.getElementById("explication").innerHTML = "Veuillez sélectionner une réponse.";
+        return;
+    }
 
-const q = shuffledQuestions[current];
-const reponse = selected.value;
-q.userAnswer = reponse;
+    const q = shuffledQuestions[current];
+    const userAnswer = selected.value;
 
+    const label = selected.nextElementSibling;
 
-// Récupération du label cliqué
-const label = selected.nextElementSibling;
+    label.classList.add("answer-selected");
 
+    setTimeout(() => {
 
-// Animation clic
-label.classList.add("answer-selected");
+        if (userAnswer === q.bonne_reponse) {
+            score++;
+            label.classList.add("answer-correct");
+            document.getElementById("explication").innerHTML =
+                `<span class='success'>Bonne réponse !</span> ${q.explication}`;
+        } else {
+            label.classList.add("answer-wrong");
+            document.getElementById("explication").innerHTML =
+                `<span class='fail'>Mauvaise réponse.</span> ${q.explication}`;
 
+            document.querySelectorAll(`input[name="q${current}"]`).forEach((input) => {
+                if (input.value === q.bonne_reponse) {
+                    input.nextElementSibling.classList.add("answer-correct-auto");
+                }
+            });
+        }
 
-setTimeout(() => {
-// Bonne réponse
-if (reponse === q.bonne_reponse) {
-score++;
-label.classList.add("answer-correct");
-document.getElementById("explication").innerHTML = `<span class='success'>Bonne réponse !</span> ${q.explication}`;
-} else {
-label.classList.add("answer-wrong");
-document.getElementById("explication").innerHTML = `<span class='fail'>Mauvaise réponse.</span> ${q.explication}`;
+        document.getElementById("score").innerText =
+            `Score actuel : ${score} / ${shuffledQuestions.length}`;
 
+        current++;
 
-// Mettre en vert la bonne réponse
-document.querySelectorAll("input[name='q']").forEach((input) => {
-if (input.value === q.bonne_reponse) {
-input.nextElementSibling.classList.add("answer-correct-auto");
-}
-});
-}
-
-
-// Mise à jour score
-document.getElementById("score").innerText = `Score actuel : ${score} / ${shuffledQuestions.length}`;
-
-
-current++;
-
-
-if (current < shuffledQuestions.length) {
-setTimeout(showQuestion, 2500);
-} else {
-setTimeout(endQuiz, 2500);
-}
-}, 300); // délai animation
+        if (current < shuffledQuestions.length) {
+            setTimeout(showQuestion, 2500);
+        } else {
+            setTimeout(endQuiz, 2500);
+        }
+    }, 300);
 }
 
 
@@ -165,9 +141,10 @@ setTimeout(endQuiz, 2500);
 // =============================
 function endQuiz() {
     document.getElementById("quiz").innerHTML = `
-    <h2>Quiz terminé !</h2>
-    <p>Score final : ${score} / ${shuffledQuestions.length}</p>`;
+        <h2>Quiz terminé !</h2>
+        <p>Score final : ${score} / ${shuffledQuestions.length}</p>`;
 }
+
 
 // =============================
 // LANCEMENT DU QUIZ
@@ -175,16 +152,21 @@ function endQuiz() {
 document.getElementById("startQuiz").addEventListener("click", () => {
     const nom = document.getElementById("nom").value.trim();
     const prenom = document.getElementById("prenom").value.trim();
+
     if (!nom || !prenom) {
         alert("Merci de renseigner votre nom et prénom avant de commencer.");
         return;
     }
+
     user.nom = nom;
     user.prenom = prenom;
-    shuffledQuestions = shuffleQuestions();
+
+    shuffledQuestions = shuffleQuestions();  
     current = 0;
     score = 0;
+
     document.getElementById("userForm").style.display = "none";
     document.getElementById("quiz").style.display = "block";
-    showQuestion(); // Appel de la fonction showQuestion
+
+    showQuestion();
 });
