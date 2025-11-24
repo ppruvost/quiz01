@@ -17,6 +17,7 @@ body {
   padding: 32px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease;
 }
 
 /* ===============================
@@ -89,10 +90,21 @@ h2 {
   color: #1b2763;
 }
 
+/* ANIMATION entrée question */
+.pop-in {
+  animation: popIn 0.45s ease;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  60% { opacity: 1; transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
 /* ===============================
    OPTIONS (style Kahoot)
 =============================== */
-.options label {
+.options label.option-card {
   display: block;
   background: #eef1ff;
   border: 3px solid transparent;
@@ -102,6 +114,7 @@ h2 {
   cursor: pointer;
   transition: 0.25s ease;
   font-size: 1.05em;
+  position: relative;
 }
 
 .options label:hover {
@@ -112,10 +125,44 @@ input[type="radio"] {
   display: none;
 }
 
-input[type="radio"]:checked + label {
-  background: #b6c4ff;
-  border: 3px solid #1b2a78;
-  font-weight: bold;
+/* ===============================
+   ANIMATIONS DE VALIDATION KAHOOT
+=============================== */
+
+/* clic → effet pulsation */
+.answer-selected {
+  animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* BONNE réponse (vert) */
+.answer-correct,
+.answer-correct-auto {
+  background: #9af5a3 !important;
+  border-color: #2b8a3e !important;
+  animation: flashGreen 0.5s ease;
+}
+
+@keyframes flashGreen {
+  0% { box-shadow: 0 0 0px rgba(43,138,62,0.1); }
+  100% { box-shadow: 0 0 18px rgba(43,138,62,0.6); }
+}
+
+/* MAUVAISE réponse (rouge) */
+.answer-wrong {
+  background: #ffb3b3 !important;
+  border-color: #c62828 !important;
+  animation: flashRed 0.5s ease;
+}
+
+@keyframes flashRed {
+  0% { box-shadow: 0 0 0px rgba(198,40,40,0.1); }
+  100% { box-shadow: 0 0 18px rgba(198,40,40,0.6); }
 }
 
 /* ===============================
@@ -173,4 +220,10 @@ input[type="radio"]:checked + label {
 =============================== */
 .hidden {
   display: none;
+}
+
+/* fade général */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
