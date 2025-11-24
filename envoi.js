@@ -2,24 +2,35 @@
 // Initialisation EmailJS
 // =============================
 (function () {
-  emailjs.init("TJHX0tkW1CCz7lv7a");  // Ta clé publique
+  emailjs.init("TJHX0tkW1CCz7lv7a"); // clé publique fournie
 })();
 
-// On sauvegarde l'ancien endQuiz de questions.js
+// Sauvegarde de la fonction endQuiz originale (définie dans questions.js)
 const oldEndQuiz = endQuiz;
 
 // =============================
-// Fin du quiz + Envoi EmailJS
+// Fin du quiz + Envoi EmailJS + Confettis + Jingle
 // =============================
 endQuiz = function () {
-
-  // Exécution de l’affichage original du quiz
+  // Exécution normale
   oldEndQuiz();
 
-  // Score final réel sur les questions mélangées
+  // Lecture du jingle
+  const sound = document.getElementById("victorySound");
+  if (sound) sound.play();
+
+  // Confettis
+  confetti({
+    particleCount: 200,
+    spread: 120,
+    startVelocity: 45,
+    origin: { y: 0.6 }
+  });
+
+  // Score final
   const scoreFinal = `${score} / ${shuffledQuestions.length}`;
 
-  // Préparation du résumé détaillé
+  // Préparation du résumé
   let recap = "";
   shuffledQuestions.forEach((q, i) => {
     recap += `Q${i + 1}: ${q.question}\n`;
@@ -27,23 +38,23 @@ endQuiz = function () {
     recap += `Bonne réponse : ${q.bonne_reponse}\n\n`;
   });
 
-  // Paramètres envoyés à EmailJS
+  // Paramètres EmailJS
   const emailParams = {
     nom: user.nom,
     prenom: user.prenom,
     score: scoreFinal,
     details: recap,
-    email: "lyceepro.mermoz@gmail.com"   // Adresse du prof
+    email: "lyceepro.mermoz@gmail.com" // adresse professeur
   };
 
-  // Envoi EmailJS
+  // Envoi
   emailjs
     .send("service_cgh817y", "template_ly7s41e", emailParams)
     .then(() => {
-      alert("✅ Résultats envoyés automatiquement par e-mail à votre professeur.\nMerci !");
+      alert("✅ Résultats envoyés automatiquement par e-mail à votre professeur. Merci !");
     })
     .catch((error) => {
       console.error("❌ Erreur EmailJS :", error);
-      alert("Erreur lors de l’envoi : " + JSON.stringify(error));
+      alert("Une erreur est survenue lors de l'envoi : " + JSON.stringify(error));
     });
 };
