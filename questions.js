@@ -59,19 +59,26 @@ const questions = [
 // =============================
 function showQuestion() {
     const question = shuffledQuestions[current];
-    let optionsHTML = question.options.map((option, index) =>
-        `<div>
-            <input type="radio" id="option${index}" name="q" value="${option}">
-            <label for="option${index}">${option}</label>
-        </div>`
-    ).join('');
+
+    let optionsHTML = question.options.map((option, index) => {
+        const inputId = `q${current}_opt${index}`; // ID UNIQUE !
+
+        return `
+            <div class="option-container">
+                <input type="radio" id="${inputId}" name="q${current}" value="${option}">
+                <label for="${inputId}">${option}</label>
+            </div>
+        `;
+    }).join('');
 
     document.getElementById("quiz").innerHTML = `
         <h2>${question.question}</h2>
         ${optionsHTML}
         <button onclick="validateAnswer()">Valider</button>
+        <div id="explication"></div>
     `;
 }
+
 // =============================
 
 // =============================
