@@ -55,6 +55,25 @@ const questions = [
   { question: "20. Une Vc trop faible entraîne :", options: ["Échauffement important", "Casse outil immédiate", "Mauvais état de surface", "Coupe impossible"], bonne_reponse: "Mauvais état de surface", explication: "Copeaux mal formés." }
 ];
 // =============================
+// --- Génération du HTML ---
+// =============================
+function afficherQuestion(q) {
+    let html = `<h3>${q.question}</h3>`;
+
+    q.answers.forEach((rep, index) => {
+        html += `
+            <label class="ligne-reponse">
+                <input type="radio" name="reponse" value="${index}">
+                <span>${rep}</span>
+            </label>
+        `;
+    });
+
+    document.getElementById("quiz").innerHTML = html;
+}
+
+afficherQuestion(questions[0]);
+// =============================
 // AFFICHAGE D'UNE QUESTION
 // =============================
 function showQuestion() {
