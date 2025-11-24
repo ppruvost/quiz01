@@ -1,29 +1,32 @@
 /* ===============================
-   STYLE GLOBAL
+   STYLE GLOBAL DYS-FRIENDLY
 =============================== */
 body {
-  font-family: Verdana, Arial, sans-serif;
+  font-family: "Lexend", Verdana, Arial, sans-serif;
   background: #f3f5ff;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
+  font-size: 18px;
 }
 
 .container {
-  max-width: 700px;
+  max-width: 750px;
   margin: 40px auto;
   background: #ffffff;
   padding: 32px;
   border-radius: 16px;
-  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* ===============================
    TITRES
 =============================== */
 h1 {
-  color: #2a3d8f;
+  color: #1b2a78;
   text-align: center;
   margin-bottom: 15px;
+  letter-spacing: 0.5px;
 }
 
 h1::after {
@@ -31,13 +34,13 @@ h1::after {
   display: block;
   font-size: 0.8em;
   margin-top: 4px;
-  color: #4c5fcc;
+  color: #3c4fc9;
   opacity: 0.85;
 }
 
 h2 {
   text-align: center;
-  color: #2a3d8f;
+  color: #1b2a78;
 }
 
 /* ===============================
@@ -46,7 +49,6 @@ h2 {
 .intro {
   font-size: 1.1em;
   color: #333;
-  text-align: left;
   margin-bottom: 20px;
 }
 
@@ -56,24 +58,24 @@ h2 {
 #userForm {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 20px;
 }
 
 #userForm label {
   font-weight: bold;
-  color: #1f2d67;
+  color: #1b2a78;
 }
 
 #userForm input {
-  padding: 10px;
+  padding: 12px;
   border: 2px solid #c7d0ff;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1em;
 }
 
 #userForm input:focus {
-  border-color: #2a3d8f;
+  border-color: #1b2a78;
   outline: none;
 }
 
@@ -85,26 +87,25 @@ h2 {
   font-weight: bold;
   margin-bottom: 16px;
   color: #1b2763;
-  text-align: left;
 }
 
 /* ===============================
-   OPTIONS DE RÉPONSE (type Kahoot)
+   OPTIONS (style Kahoot)
 =============================== */
 .options label {
   display: block;
-  background: #e8ecff;
+  background: #eef1ff;
   border: 3px solid transparent;
-  border-radius: 12px;
-  padding: 12px 16px;
-  margin-bottom: 14px;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
   cursor: pointer;
   transition: 0.25s ease;
   font-size: 1.05em;
 }
 
 .options label:hover {
-  background: #d1d8ff;
+  background: #d7ddff;
 }
 
 input[type="radio"] {
@@ -113,7 +114,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked + label {
   background: #b6c4ff;
-  border: 3px solid #2a3d8f;
+  border: 3px solid #1b2a78;
   font-weight: bold;
 }
 
@@ -123,27 +124,27 @@ input[type="radio"]:checked + label {
 .button {
   display: inline-block;
   width: 100%;
-  padding: 14px;
-  background: #2a3d8f;
+  padding: 16px;
+  background: #1b2a78;
   color: #fff;
   border: none;
-  border-radius: 10px;
-  font-size: 1.2em;
+  border-radius: 12px;
+  font-size: 1.25em;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 22px;
   transition: 0.25s;
+  letter-spacing: 0.5px;
 }
 
 .button:hover {
-  background: #1f2d67;
+  background: #14205a;
 }
 
-/* Variation couleurs (Kahoot-like) */
 .start { background: #5c7dff; }
 .start:hover { background: #455ecc; }
 
-.next { background: #6bcf7b; }
-.next:hover { background: #48a758; }
+.next { background: #69c77b; }
+.next:hover { background: #4ca561; }
 
 .restart { background: #ff7b72; }
 .restart:hover { background: #d85a54; }
@@ -153,17 +154,18 @@ input[type="radio"]:checked + label {
 =============================== */
 .score {
   font-size: 1.4em;
-  color: #2a3d8f;
+  color: #1b2a78;
   text-align: center;
   margin-bottom: 20px;
 }
 
 .explication {
   background: #eef3ff;
-  border-left: 6px solid #2a3d8f;
-  padding: 12px 16px;
-  margin-bottom: 12px;
+  border-left: 6px solid #1b2a78;
+  padding: 14px 18px;
+  margin-bottom: 16px;
   border-radius: 10px;
+  font-size: 1.05em;
 }
 
 /* ===============================
