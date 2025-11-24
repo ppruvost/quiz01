@@ -6,28 +6,29 @@ let current = 0;
 let score = 0;
 let shuffledQuestions = [];
 
+
 // =============================
 // Mélange d'un tableau
 // =============================
 function shuffleArray(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
+const a = [...arr];
+for (let i = a.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[a[i], a[j]] = [a[j], a[i]];
 }
+return a;
+}
+
 
 // =============================
 // Mélange des questions + réponses
 // =============================
 function shuffleQuestions() {
-  return questions.map((q) => ({
-    ...q,
-    options: shuffleArray(q.options),
-  }));
+return questions.map((q) => ({
+...q,
+options: shuffleArray(q.options),
+}));
 }
-
 // =============================
 // LISTE DES QUESTIONS
 // =============================
@@ -55,24 +56,107 @@ const questions = [
 ];
 
 // =============================
-// AFFICHAGE D'UNE QUESTION
+}
+
+
 // =============================
-function showQuestion() {
-  const q = shuffledQuestions[current];
-  if (!q) return endQuiz();
+// VALIDATION AVEC ANIMATION STYLE KAHOOT
+// =============================
+function validateAnswer() {
+const selected = document.querySelector('input[name="q"]:checked');
 
-  let html = `<div class="question">${q.question}</div><div class="options">`;
 
-  q.options.forEach((opt, idx) => {
-    html += `
-      <input type="radio" id="opt${idx}" name="q" value="${opt}" />
-      <label for="opt${idx}">${opt}</label>
-    `;
-  });
+if (!selected) {
+document.getElementById("explication").innerHTML = "Veuillez sélectionner une réponse.";
+return;
+}
 
-  html += `</div><button id="submit" class="button next">Valider</button>`;
 
-  document.getElementById("quiz").innerHTML = html;
-  document.getElementById("explication").innerHTML = "";
+const q = shuffledQuestions[current];
+const reponse = selected.value;
+q.userAnswer = reponse;
 
-  document.getElement
+
+// Récupération du label cliqué
+const label = selected.nextElementSibling;
+
+
+// Animation clic
+label.classList.add("answer-selected");
+
+
+setTimeout(() => {
+// Bonne réponse
+if (reponse === q.bonne_reponse) {
+score++;
+label.classList.add("answer-correct");
+document.getElementById("explication").innerHTML = `<span class='success'>Bonne réponse !</span> ${q.explication}`;
+} else {
+label.classList.add("answer-wrong");
+document.getElementById("explication").innerHTML = `<span class='fail'>Mauvaise réponse.</span> ${q.explication}`;
+
+
+// Mettre en vert la bonne réponse
+document.querySelectorAll("input[name='q']").forEach((input) => {
+if (input.value === q.bonne_reponse) {
+input.nextElementSibling.classList.add("answer-correct-auto");
+}
+});
+}
+
+
+// Mise à jour score
+document.getElementById("score").innerText = `Score actuel : ${score} / ${shuffledQuestions.length}`;
+
+
+current++;
+
+
+if (current < shuffledQuestions.length) {
+setTimeout(showQuestion, 2500);
+} else {
+setTimeout(endQuiz, 2500);
+}
+}, 300); // délai animation
+}
+
+
+// =============================
+// FIN DU QUIZ
+// =============================
+function endQuiz() {
+document.getElementById("quiz").innerHTML = `
+<h2>Quiz terminé !</h2>
+<p>Score final : ${score} / ${shuffledQuestions.length}</p>`;
+}
+
+
+// =============================
+// LANCEMENT DU QUIZ
+// =============================
+document.getElementById("startQuiz").addEventListener("click", () => {
+const nom = document.getElementById("nom").value.trim();
+const prenom = document.getElementById("prenom").value.trim();
+
+
+if (!nom || !prenom) {
+alert("Merci de renseigner votre nom et prénom avant de commencer.");
+return;
+}
+
+
+user.nom = nom;
+user.prenom = prenom;
+
+
+shuffledQuestions = shuffleQuestions();
+current = 0;
+score = 0;
+
+
+document.getElementById("userForm").style.display = "none";
+document.getElementById("quiz").style.display = "block";
+
+
+showQuestion();
+});
