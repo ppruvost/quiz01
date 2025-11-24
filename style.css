@@ -104,6 +104,11 @@ h2 {
 /* ===============================
    OPTIONS (style Kahoot)
 =============================== */
+
+.options {
+  margin-top: 20px;
+}
+
 .options label.option-card {
   display: block;
   background: #eef1ff;
@@ -117,10 +122,12 @@ h2 {
   position: relative;
 }
 
-.options label:hover {
+/* effet hover */
+.options label.option-card:hover {
   background: #d7ddff;
 }
 
+/* cacher les radios */
 input[type="radio"] {
   display: none;
 }
