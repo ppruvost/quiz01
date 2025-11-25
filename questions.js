@@ -1,15 +1,8 @@
-// =============================
-// Variables globales
-// =============================
 let user = { nom: "", prenom: "" };
 let current = 0;
 let score = 0;
 let shuffledQuestions = [];
 
-
-// =============================
-// Mélange d'un tableau
-// =============================
 function shuffleArray(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -19,21 +12,16 @@ function shuffleArray(arr) {
     return a;
 }
 
-
-// =============================
-// Mélange des questions + réponses
-// =============================
 function shuffleQuestions() {
-    return questions.map((q) => ({
+    return questions.map(q => ({
         ...q,
         options: shuffleArray(q.options)
     }));
 }
 
-
-// =============================
+// =====================
 // LISTE DES QUESTIONS
-// =============================
+// =====================
 const questions = [
   { question: "1. La vitesse linéaire en usinage (Vc) dépend de :", options: ["N uniquement", "D uniquement", "D et N", "fz et Z"], bonne_reponse: "D et N", explication: "Vc = π × D × N / 1000 : elle dépend du diamètre et de la vitesse de rotation." },
   { question: "2. La relation correcte entre la vitesse linéaire Vc, le diamètre D et la fréquence de rotation N est :", options: ["Vc = D / N", "Vc = π × D × N / 1000", "Vc = N / (π × D)", "Vc = D × 1000 / N"], bonne_reponse: "Vc = π × D × N / 1000", explication: "C’est la formule fondamentale utilisée en usinage." },
@@ -58,27 +46,25 @@ const questions = [
 ];
 
 
-
 // =============================
-// AFFICHAGE D'UNE QUESTION
+// AFFICHAGE QUESTION
 // =============================
 function showQuestion() {
-    const question = shuffledQuestions[current];
+    const q = shuffledQuestions[current];
 
-    let optionsHTML = question.options.map((option, index) => {
-        const inputId = `q${current}_opt${index}`;
-
+    let optionsHTML = q.options.map((opt, i) => {
+        const id = `q${current}_${i}`;
         return `
-            <div class="option-container">
-                <input type="radio" id="${inputId}" name="q${current}" value="${option}">
-                <label for="${inputId}">${option}</label>
-            </div>
+            <label class="option-card">
+                <input type="radio" id="${id}" name="q${current}" value="${opt}">
+                <span>${opt}</span>
+            </label>
         `;
     }).join('');
 
     document.getElementById("quiz").innerHTML = `
-        <h2>${question.question}</h2>
-        ${optionsHTML}
+        <h2>${q.question}</h2>
+        <div class="options">${optionsHTML}</div>
         <button onclick="validateAnswer()">Valider</button>
         <div id="explication"></div>
     `;
@@ -86,11 +72,10 @@ function showQuestion() {
 
 
 // =============================
-// VALIDATION STYLE KAHOOT
+// VALIDATION
 // =============================
 function validateAnswer() {
     const selected = document.querySelector(`input[name="q${current}"]:checked`);
-
     if (!selected) {
         document.getElementById("explication").innerHTML = "Veuillez sélectionner une réponse.";
         return;
@@ -98,26 +83,24 @@ function validateAnswer() {
 
     const q = shuffledQuestions[current];
     const userAnswer = selected.value;
+    const card = selected.parentElement;
 
-    const label = selected.nextElementSibling;
-
-    label.classList.add("answer-selected");
+    card.classList.add("answer-selected");
 
     setTimeout(() => {
-
         if (userAnswer === q.bonne_reponse) {
             score++;
-            label.classList.add("answer-correct");
+            card.classList.add("answer-correct");
             document.getElementById("explication").innerHTML =
                 `<span class='success'>Bonne réponse !</span> ${q.explication}`;
         } else {
-            label.classList.add("answer-wrong");
+            card.classList.add("answer-wrong");
             document.getElementById("explication").innerHTML =
                 `<span class='fail'>Mauvaise réponse.</span> ${q.explication}`;
 
-            document.querySelectorAll(`input[name="q${current}"]`).forEach((input) => {
-                if (input.value === q.bonne_reponse) {
-                    input.nextElementSibling.classList.add("answer-correct-auto");
+            document.querySelectorAll(`input[name="q${current}"]`).forEach(r => {
+                if (r.value === q.bonne_reponse) {
+                    r.parentElement.classList.add("answer-correct-auto");
                 }
             });
         }
@@ -132,6 +115,7 @@ function validateAnswer() {
         } else {
             setTimeout(endQuiz, 2500);
         }
+
     }, 300);
 }
 
@@ -147,7 +131,7 @@ function endQuiz() {
 
 
 // =============================
-// LANCEMENT DU QUIZ
+// LANCEMENT
 // =============================
 document.getElementById("startQuiz").addEventListener("click", () => {
     const nom = document.getElementById("nom").value.trim();
@@ -161,12 +145,13 @@ document.getElementById("startQuiz").addEventListener("click", () => {
     user.nom = nom;
     user.prenom = prenom;
 
-    shuffledQuestions = shuffleQuestions();  
+    shuffledQuestions = shuffleQuestions();
+
     current = 0;
     score = 0;
 
     document.getElementById("userForm").style.display = "none";
-    document.getElementById("quiz").style.display = "block";
+    document.getElementById("quiz").classList.remove("hidden");
 
     showQuestion();
 });
