@@ -127,9 +127,11 @@ h2 {
   background: #d7ddff;
 }
 
-/* cacher les radios */
+/* rendre visible les radios */
 input[type="radio"] {
-  display: none;
+  transform: scale(1.5);     /* plus gros */
+  margin-right: 12px;        /* espace */
+  cursor: pointer;
 }
 
 /* ===============================
@@ -175,6 +177,20 @@ input[type="radio"] {
 /* ===============================
    BOUTONS
 =============================== */
+button.validate {
+    font-size: 1.4em;
+    padding: 18px 28px;
+    border-radius: 14px;
+    background: #5c7dff;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+button.validate:hover {
+    background: #455ecc;
+}
+
 .button {
   display: inline-block;
   width: 100%;
